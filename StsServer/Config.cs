@@ -14,6 +14,7 @@ namespace StsServer
             return new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
+                new IdentityResources.Email(),
                 new IdentityResources.Profile(),
             };
         }
@@ -29,13 +30,10 @@ namespace StsServer
                     {
                         new Secret("native_api_secret".Sha256())
                     }
-                    //Scopes =
-                    //{
-                    //    new Scope
-                    //    {
-                    //        Name = "native_api"
-                    //    }
-                    //}
+                },
+                new ApiResource("resourceapi", "Resource API")
+                {
+                    Scopes = {new Scope("api.read")}
                 }
             };
         }
@@ -76,7 +74,19 @@ namespace StsServer
 
                     AllowOfflineAccess = true,
                     RefreshTokenUsage = TokenUsage.ReUse
-                 }
+                 },
+                new Client {
+                    RequireConsent = false,
+                    ClientId = "angular_spa",
+                    ClientName = "Angular SPA",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowedScopes = { "openid", "profile", "email", "native_api" },
+                    RedirectUris = {"https://localhost:4200/auth-callback"},
+                    PostLogoutRedirectUris = {"https://localhost:4200"},
+                    AllowedCorsOrigins = {"https://localhost:4200"},
+                    AllowAccessTokensViaBrowser = true,
+                    AccessTokenLifetime = 3600
+                }
             };
         }
     }

@@ -52,6 +52,12 @@ namespace StsServer
 
             services.AddControllersWithViews()
                  .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader()));
+
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

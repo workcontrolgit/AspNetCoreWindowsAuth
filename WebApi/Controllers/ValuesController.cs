@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AppAuthorizationService;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +26,9 @@ namespace WebApi.Controllers
         [Route("", Name = nameof(GetAll))]
         public ActionResult<IEnumerable<string>> GetAll()
         {
-            return new string[] { "data 1 from the api for the native application", "data 2 from the api for the native application" };
+            //return new string[] { "data 1 from the api for the native application", "data 2 from the api for the native application" };
+            return new JsonResult(User.Claims.Select(c => new { c.Type, c.Value }));
+
         }
 
         [Authorize("ValuesRoutePolicy")]

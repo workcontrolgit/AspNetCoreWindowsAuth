@@ -74,6 +74,7 @@ namespace WebApi
             services.AddControllers()
                 .AddNewtonsoftJson()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -109,6 +110,8 @@ namespace WebApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             app.UseAuthentication();
             app.UseAuthorization();
