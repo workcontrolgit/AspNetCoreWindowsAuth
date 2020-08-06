@@ -21,7 +21,6 @@ namespace StsServer
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
                 .CreateLogger();
-
             try
             {
                 Log.Information("Starting web host");
